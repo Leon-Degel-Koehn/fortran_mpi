@@ -25,6 +25,7 @@ module mpi
     integer, parameter :: MPI_INFO_NULL = -2000
     integer, parameter :: MPI_STATUS_SIZE = 5
     integer :: MPI_STATUS_IGNORE = 0
+    integer :: MPI_MAX_ERROR_STRING = 512
     ! NOTE: I've no idea for how to implement this, refer
     ! see section 2.5.4 page 21 of mpi40-report.pdf
     ! this is probably not correct right now
