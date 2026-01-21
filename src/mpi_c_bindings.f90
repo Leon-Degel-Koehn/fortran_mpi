@@ -103,6 +103,13 @@ module mpi_c_bindings
             integer(c_int) :: c_mpi_init_thread
         end function c_mpi_init_thread
 
+        integer(c_int) function c_mpi_abort(comm, errorcode) &
+            bind(C, name="MPI_Abort")
+            use iso_c_binding, only: c_int
+            integer(c_int), value :: comm
+            integer(c_int), value :: errorcode
+        end function c_mpi_abort
+
         integer(c_int) function c_mpi_finalize() bind(C, name="MPI_Finalize")
             use iso_c_binding, only : c_int
         end function c_mpi_finalize

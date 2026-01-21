@@ -40,6 +40,10 @@ module mpi
         module procedure MPI_Init_thread_proc
     end interface MPI_Init_thread
 
+    interface MPI_Abort
+        module procedure MPI_Abort_proc
+    end interface MPI_Abort
+    
     interface MPI_Finalize
         module procedure MPI_Finalize_proc
     end interface MPI_Finalize
@@ -235,6 +239,14 @@ module mpi
             c_datatype = c_mpi_logical
         end if
     end function
+
+    subroutine MPI_Abort_proc(comm, errorcode, ierr)
+        use mpi_c_bindings, only: c_mpi_abort
+        use iso_c_binding, only : c_int, c_ptr, c_null_ptr
+        integer(c_int), value :: comm
+        integer(c_int), value :: errorcode
+        integer(c_int) :: ierr
+    end subroutine MPI_Abort_proc
 
     subroutine MPI_Init_proc(ierr)
         use mpi_c_bindings, only: c_mpi_init
