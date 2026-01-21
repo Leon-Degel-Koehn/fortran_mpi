@@ -44,6 +44,10 @@ module mpi
         module procedure MPI_Abort_proc
     end interface MPI_Abort
     
+    interface MPI_Error_String
+        module procedure mpi_error_string_proc
+    end interface MPI_Error_String
+
     interface MPI_Finalize
         module procedure MPI_Finalize_proc
     end interface MPI_Finalize
@@ -239,6 +243,23 @@ module mpi
             c_datatype = c_mpi_logical
         end if
     end function
+
+    subroutine mpi_error_string_proc(errorcode, string, resultlen, ierr)
+        use mpi_c_bindings, only: c_mpi_error_string
+        use iso_c_binding, only: c_int, c_char
+        integer, intent(in) :: errorcode
+        character(len=*), intent(out) :: string
+        integer, intent(out) :: resultlen
+        integer, intent(out) :: ierr
+
+        ! Call C MPI
+        ierr = c_mpi_error_string(errorcode, string, resultlen)
+
+        ! Optional: blank-fill remainder (defensive)
+        if (resultlen < len(string)) then
+            string(resultlen+1:) = ' '
+        end if
+    end subroutine mpi_error_string_proc
 
     subroutine MPI_Abort_proc(comm, errorcode, ierr)
         use mpi_c_bindings, only: c_mpi_abort

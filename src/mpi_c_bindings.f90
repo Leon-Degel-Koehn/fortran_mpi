@@ -110,6 +110,14 @@ module mpi_c_bindings
             integer(c_int), value :: errorcode
         end function c_mpi_abort
 
+        integer(c_int) function c_mpi_error_string(errorcode, string, resultlen) &
+            bind(C, name="MPI_Error_string")
+            use iso_c_binding, only: c_int, c_char
+            integer(c_int), value :: errorcode
+            character(kind=c_char), dimension(*) :: string
+            integer(c_int) :: resultlen
+        end function c_mpi_error_string
+
         integer(c_int) function c_mpi_finalize() bind(C, name="MPI_Finalize")
             use iso_c_binding, only : c_int
         end function c_mpi_finalize
